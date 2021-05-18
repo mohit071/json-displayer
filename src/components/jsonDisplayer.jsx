@@ -16,8 +16,9 @@ class JsonDisplayer extends Component {
 
       case "object":
         return (
-          <div style={{ fontSize: "15px", fontWeight: "400" }}>
-            {key} : <JsonDisplayer key={key} id={key} data={data} />
+          <div>
+            <span className="text-success font-weight-bold pl-3">{key}</span>:{" "}
+            <JsonDisplayer key={key} id={key} data={data} />
           </div>
         );
 
@@ -47,15 +48,17 @@ class JsonDisplayer extends Component {
 
     return (
       <React.Fragment>
-        {"{"}
-        {dataKeys.map((key) =>
-          typeof data[key] === "string" ||
-          typeof data[key] === "boolean" ||
-          typeof data[key] === "number"
-            ? this.renderBasicElement(key, data[key], typeof data[key])
-            : this.renderComplexElement(key, data[key], typeof data[key])
-        )}
-        {"}"},
+        <span className=" font-weight-bold">{"{"}</span>
+        <div className="pl-3">
+          {dataKeys.map((key) =>
+            typeof data[key] === "string" ||
+            typeof data[key] === "boolean" ||
+            typeof data[key] === "number"
+              ? this.renderBasicElement(key, data[key], typeof data[key])
+              : this.renderComplexElement(key, data[key], typeof data[key])
+          )}
+        </div>
+        <span className=" font-weight-bold">{"}"}</span>
       </React.Fragment>
     );
   }

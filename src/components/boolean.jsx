@@ -5,8 +5,11 @@ class BooleanComponent extends Component {
 
   render() {
     return (
-      <div className="common">
-        {this.props.id} : {JSON.stringify(this.props.data)},
+      <div className="common  pl-3">
+        <span className="text-success font-weight-bold">{this.props.id}</span>:{" "}
+        <span className="text-info font-weight-bold">
+          {JSON.stringify(this.props.data)}
+        </span>
       </div>
     );
   }

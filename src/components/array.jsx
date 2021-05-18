@@ -8,20 +8,22 @@ class ArrayComponent extends Component {
     if (this.props.data.length > 0) {
       return (
         <>
-          <div className="common" style={{ fontSize: "15px", fontWeight: 400 }}>
-            {this.props.id} : [
+          <div className="common">
+            <span className="text-success font-weight-bold pl-3">
+              {" "}
+              {this.props.id}
+            </span>{" "}
+            : <span className="font-weight-bold">[</span>
             {this.props.data.map((elem, index) =>
               typeof elem === "boolean" ||
               typeof elem === "number" ||
               typeof elem === "string" ? (
-                <span key={index} style={{ fontSize: "15px", fontWeight: 400 }}>
-                  {JSON.stringify(elem)},
-                </span>
+                <span key={index}>{JSON.stringify(elem)}</span>
               ) : (
                 <JsonDisplayer key={index} data={elem} />
               )
             )}
-            ]
+            <span className="font-weight-bold">]</span>
           </div>
         </>
       );
