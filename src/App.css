@@ -2,3 +2,26 @@
   font-size: 15px;
   font-weight: 400;
 }
+
+.custom-border {
+  border: 2px solid beige;
+}
+
+.json-displayer-wrapper {
+  max-height: 800px;
+  overflow: scroll;
+}
+
+.light {
+  border: 1px solid;
+  height: 350px;
+}
+
+.dark {
+  border: 2px solid red;
+  height: 350px;
+}
+
+.border-thick {
+  border-bottom: 3px solid;
+}
