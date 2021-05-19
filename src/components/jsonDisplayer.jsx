@@ -1,23 +1,18 @@
 import React, { Component } from "react";
-import _ from "lodash";
-import ArrayComponent from "./array";
 import NumberComponent from "./number";
 import BooleanComponent from "./boolean";
 import StringComponent from "./string";
+import ToggleComponent from "./toggleComponent";
 
 class JsonDisplayer extends Component {
   state = {};
 
   renderComplexElement(key, data, type) {
-    type = Array.isArray(data) ? "array" : "object";
     switch (type) {
-      case "array":
-        return <ArrayComponent key={key} id={key} data={data} />;
-
       case "object":
         return (
-          <div style={{ fontSize: "15px", fontWeight: "400" }}>
-            {key} : <JsonDisplayer key={key} id={key} data={data} />
+          <div>
+            <ToggleComponent id={key} data={data} />
           </div>
         );
 
@@ -34,12 +29,15 @@ class JsonDisplayer extends Component {
         return <BooleanComponent key={key} id={key} data={data} />;
       case "number":
         return <NumberComponent key={key} id={key} data={data} />;
-
       default:
         return <StringComponent key={key} id={key} data={data} />;
-        break;
     }
   }
+
+  isNull = (val) => {
+    if (typeof val === "object" && !val) return true;
+    else return false;
+  };
 
   render() {
     const data = { ...this.props.data };
@@ -47,15 +45,16 @@ class JsonDisplayer extends Component {
 
     return (
       <React.Fragment>
-        {"{"}
-        {dataKeys.map((key) =>
-          typeof data[key] === "string" ||
-          typeof data[key] === "boolean" ||
-          typeof data[key] === "number"
-            ? this.renderBasicElement(key, data[key], typeof data[key])
-            : this.renderComplexElement(key, data[key], typeof data[key])
-        )}
-        {"}"},
+        <div className="pl-3">
+          {dataKeys.map((key) =>
+            typeof data[key] === "string" ||
+            typeof data[key] === "boolean" ||
+            typeof data[key] === "number" ||
+            this.isNull(data[key])
+              ? this.renderBasicElement(key, data[key], typeof data[key])
+              : this.renderComplexElement(key, data[key], typeof data[key])
+          )}
+        </div>
       </React.Fragment>
     );
   }
