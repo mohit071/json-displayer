@@ -12,7 +12,7 @@ class JsonDisplayer extends Component {
       case "object":
         return (
           <div>
-            <ToggleComponent key={key} id={key} data={data} />
+            <ToggleComponent id={key} data={data} />
           </div>
         );
 
@@ -34,6 +34,11 @@ class JsonDisplayer extends Component {
     }
   }
 
+  isNull = (val) => {
+    if (typeof val === "object" && !val) return true;
+    else return false;
+  };
+
   render() {
     const data = { ...this.props.data };
     const dataKeys = Object.keys(data);
@@ -44,7 +49,8 @@ class JsonDisplayer extends Component {
           {dataKeys.map((key) =>
             typeof data[key] === "string" ||
             typeof data[key] === "boolean" ||
-            typeof data[key] === "number"
+            typeof data[key] === "number" ||
+            this.isNull(data[key])
               ? this.renderBasicElement(key, data[key], typeof data[key])
               : this.renderComplexElement(key, data[key], typeof data[key])
           )}

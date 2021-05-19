@@ -18,7 +18,7 @@ class ToggleComponent extends Component {
     });
   };
   render() {
-    const { key, id, data } = this.props;
+    const { id, data } = this.props;
 
     return (
       <React.Fragment>
@@ -34,7 +34,7 @@ class ToggleComponent extends Component {
               </span>
             </span>
 
-            <JsonDisplayer key={key} id={key} data={data} />
+            <JsonDisplayer id={id} data={data} />
           </>
         )}
 

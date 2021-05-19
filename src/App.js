@@ -17,20 +17,13 @@ class App extends Component {
     theme: "github",
   };
 
-  handleChange = (e) => {
-    let data = e.currentTarget.value;
-    this.setState({ data });
-  };
-
   handleSelect = (e) => {
     let theme = e.target.value;
-    console.log(theme);
     this.setState({ theme });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello");
     let validateClicked = true;
     try {
       let parsedData = JSON.parse(this.state.data);
@@ -44,11 +37,21 @@ class App extends Component {
   handleEditorChange = (value) => {
     this.setState({ data: value });
   };
-  render() {
-    var strOb = `
-      {"type": "DeviceConfiguration","general": {"hostname": "RouterA"},"interfaces": [{"name": "lo0","type": "ethernet","addresses": [{"address": "127.0.0.1","mask": 8,"proto": "static","family": "ipv4"}]},{"name": "eth0","type": "ethernet","addresses": [{"address": "192.168.1.1","mask": 24,"proto": "static","family": "ipv4"}]}]}
-      `;
 
+  isNull = (val) => {
+    if (typeof val === "object" && !val) return true;
+    else return false;
+  };
+
+  checkPrimitiveType() {
+    return (
+      typeof this.state.parsedData === "string" ||
+      typeof this.state.parsedData === "boolean" ||
+      typeof this.state.parsedData === "number" ||
+      this.isNull(this.state.parsedData)
+    );
+  }
+  render() {
     return (
       <React.Fragment>
         <h3 className="text-center pt-3 ">
@@ -111,11 +114,19 @@ class App extends Component {
             {!this.state.error && this.state.validateClicked && (
               <React.Fragment>
                 <div className="pl-5 custom-border json-displayer-wrapper">
-                  <div className=" font-weight-bold mt-3">{"{"}</div>
-                  <div className="container ">
-                    <JsonDisplayer data={this.state.parsedData} />
-                  </div>
-                  <div className=" font-weight-bold mb-3">{"}"}</div>
+                  {this.checkPrimitiveType() && (
+                    <div>{JSON.stringify(this.state.parsedData)}</div>
+                  )}
+
+                  {!this.checkPrimitiveType() && (
+                    <React.Fragment>
+                      <div className=" font-weight-bold mt-3">{"{"}</div>
+                      <div className="container ">
+                        <JsonDisplayer data={this.state.parsedData} />
+                      </div>
+                      <div className=" font-weight-bold mb-3">{"}"}</div>
+                    </React.Fragment>
+                  )}
                 </div>
               </React.Fragment>
             )}

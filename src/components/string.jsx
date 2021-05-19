@@ -6,7 +6,9 @@ class StringComponent extends Component {
     return (
       <div className="common pl-3">
         <span className="text-success font-weight-bold">{this.props.id}</span> :{" "}
-        <span className="text-info font-weight-bold">{this.props.data}</span>
+        <span className="text-info font-weight-bold">
+          {JSON.stringify(this.props.data)}
+        </span>
       </div>
     );
   }
