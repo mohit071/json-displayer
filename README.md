@@ -1,5 +1,3 @@
-**Note - I added styling in the project on branch - design changes. Please checkout to that branch for latest update**
-
 1. TO START THE PROJECT
 
 ### `npm install`
